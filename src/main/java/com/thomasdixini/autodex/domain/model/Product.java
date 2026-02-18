@@ -20,32 +20,16 @@ public class Product {
         return productCode;
     }
 
-    public void setProductCode(int productCode) {
-        this.productCode = productCode;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public List<InputProduct> getInputs() {
         return inputs;
-    }
-
-    public void setInputs(List<InputProduct> inputs) {
-        this.inputs = inputs;
     }
 
     public void addInputProduct(Input input, int quantityForProduction) {

@@ -15,23 +15,11 @@ public class InputProduct {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public Input getInput() {
         return input;
     }
 
-    public void setInput(Input input) {
-        this.input = input;
-    }
-
     public int getQuantityForProduction() {
         return quantityForProduction;
-    }
-
-    public void setQuantityForProduction(int quantityForProduction) {
-        this.quantityForProduction = quantityForProduction;
     }
 }

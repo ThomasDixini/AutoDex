@@ -25,21 +25,16 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<CreateProductOutputDto> createProduct(@RequestBody CreateProductRequest request) {
-        try
-        {
-            CreateProductInputDto inputDto = new CreateProductInputDto(
-                request.productCode(),
-                request.name(),
-                request.price(),
-                request.inputs()
-            );
+        CreateProductInputDto inputDto = new CreateProductInputDto(
+            request.productCode(),
+            request.name(),
+            request.price(),
+            request.inputs()
+        );
 
-            CreateProductOutputDto output = createProductUseCase.execute(inputDto);
+        CreateProductOutputDto output = createProductUseCase.execute(inputDto);
 
-            return ResponseEntity.ok(output);
-        } catch (Exception e) {
-            throw e;
-        }
+        return ResponseEntity.ok(output);
     }
     
 }
