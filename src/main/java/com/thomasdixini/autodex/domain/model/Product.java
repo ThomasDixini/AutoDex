@@ -1,17 +1,19 @@
 package com.thomasdixini.autodex.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
     private int productCode;
     private String name;
     private double price;
-    private List<InputProduct> products;
+    private List<InputProduct> inputs;
 
     public Product(int productCode, String name, double price) {
         this.productCode = productCode;
         this.name = name;
         this.price = price;
+        this.inputs = new ArrayList<>();
     }
 
     public int getProductCode() {
@@ -36,5 +38,19 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<InputProduct> getInputs() {
+        return inputs;
+    }
+
+    public void setInputs(List<InputProduct> inputs) {
+        this.inputs = inputs;
+    }
+
+    public void addInputProduct(Input input, int quantityForProduction) {
+        InputProduct ip = new InputProduct(this, input, quantityForProduction);
+        this.inputs.add(ip);
+        input.getProducts().add(ip);
     }
 }
