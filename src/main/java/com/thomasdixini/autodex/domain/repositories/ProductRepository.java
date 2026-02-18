@@ -6,6 +6,6 @@ import com.thomasdixini.autodex.domain.model.Product;
 
 public interface ProductRepository {
     Product create(Product product);
-    Product findById(Long id);
+    Product findById(int id);
     List<Product> findAllByPriority();
 }

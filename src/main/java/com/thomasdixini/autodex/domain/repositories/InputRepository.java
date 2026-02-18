@@ -6,6 +6,6 @@ import com.thomasdixini.autodex.domain.model.Input;
 
 public interface  InputRepository {
     Input create(Input input);
-    Input findById(Long id);
+    Input findById(int id);
     List<Input> findAllByProductId(Long productId);
 }
