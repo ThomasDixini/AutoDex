@@ -1,0 +1,19 @@
+package com.thomasdixini.autodex.infrastructure.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.thomasdixini.autodex.application.usecases.CreateProductUseCase;
+import com.thomasdixini.autodex.domain.repositories.InputRepository;
+import com.thomasdixini.autodex.domain.repositories.ProductRepository;
+
+@Configuration
+public class ApplicationConfig {
+
+    @Bean
+    public CreateProductUseCase createProductUseCase(
+            ProductRepository productRepository,
+            InputRepository inputRepository) {
+        return new CreateProductUseCase(productRepository, inputRepository);
+    }
+}
