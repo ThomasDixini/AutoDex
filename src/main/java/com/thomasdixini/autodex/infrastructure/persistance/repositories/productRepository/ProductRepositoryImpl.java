@@ -23,7 +23,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product findById(int id) {
-        return toDomain(jpaProductRepository.findById(id).orElse(null));
+        ProductEntity entity = this.jpaProductRepository.findById(id).orElse(null);
+        if(entity == null) {
+            return null;
+        }
+        return toDomain(entity);
     }
 
     @Override

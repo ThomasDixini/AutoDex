@@ -23,7 +23,11 @@ public class InputRepositoryImpl implements InputRepository {
 
     @Override
     public Input findById(int id) {
-        return toDomain(this.jpaInputRepository.findById(id).orElse(null));
+        InputEntity entity = this.jpaInputRepository.findById(id).orElse(null);
+        if(entity == null) {
+            return null;
+        }
+        return toDomain(entity);
     }
 
     @Override
