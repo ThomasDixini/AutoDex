@@ -3,6 +3,7 @@ package com.thomasdixini.autodex.infrastructure.persistance.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class ProductEntity {
     private String name;
     private Double price;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<InputProductEntity> inputProducts = new ArrayList<>();
 
     public ProductEntity() {

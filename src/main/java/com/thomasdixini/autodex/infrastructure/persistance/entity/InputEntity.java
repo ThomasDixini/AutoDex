@@ -29,7 +29,8 @@ public class InputEntity {
     public InputEntity() {
     }
 
-    public InputEntity(String name, int quantityInStock) {
+    public InputEntity(Integer inputCode, String name, Integer quantityInStock) {
+        this.inputCode = inputCode;
         this.name = name;
         this.quantityInStock = quantityInStock;
     }

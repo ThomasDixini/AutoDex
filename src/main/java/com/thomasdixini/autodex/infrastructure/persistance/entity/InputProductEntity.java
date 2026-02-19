@@ -1,26 +1,32 @@
 package com.thomasdixini.autodex.infrastructure.persistance.entity;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "input_products")
+@Table(
+    name = "input_products",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"product_id", "input_id"})
+    }
+)
 public class InputProductEntity {
-    @EmbeddedId
-    private InputProductId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 
     @ManyToOne
-    @MapsId("inputId")
-    @JoinColumn(name = "input_id")
+    @JoinColumn(name = "input_id", nullable = false)
     private InputEntity input;
     
     private Integer quantityForProduction;
@@ -28,18 +34,18 @@ public class InputProductEntity {
     public InputProductEntity() {
     }
 
-    public InputProductEntity(InputProductId id, ProductEntity product, InputEntity input, Integer quantityForProduction) {
+    public InputProductEntity(Long id, ProductEntity product, InputEntity input, Integer quantityForProduction) {
         this.id = id;
         this.product = product;
         this.input = input;
         this.quantityForProduction = quantityForProduction;
     }
 
-    public InputProductId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(InputProductId id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

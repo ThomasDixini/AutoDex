@@ -3,22 +3,47 @@ package com.thomasdixini.autodex.infrastructure.persistance.repositories.product
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.thomasdixini.autodex.domain.model.InputProduct;
 import com.thomasdixini.autodex.domain.model.Product;
 import com.thomasdixini.autodex.domain.repositories.ProductRepository;
+import com.thomasdixini.autodex.infrastructure.persistance.entity.InputEntity;
+import com.thomasdixini.autodex.infrastructure.persistance.entity.InputProductEntity;
 import com.thomasdixini.autodex.infrastructure.persistance.entity.ProductEntity;
+import com.thomasdixini.autodex.infrastructure.persistance.repositories.inputRepository.JPAInputRepository;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
     private final JPAProductRepository jpaProductRepository;
+    private final JPAInputRepository jpaInputRepository;
 
-    public ProductRepositoryImpl(JPAProductRepository jpaProductRepository) {
+    public ProductRepositoryImpl(JPAProductRepository jpaProductRepository, JPAInputRepository jpaInputRepository) {
         this.jpaProductRepository = jpaProductRepository;
+        this.jpaInputRepository = jpaInputRepository;
     }
 
     @Override
+    @Transactional
     public Product create(Product product) {
-        return toDomain(jpaProductRepository.save(toEntity(product)));
+        ProductEntity entity = toEntity(product);
+
+        if (product.getInputs() != null) {
+            for (InputProduct ip : product.getInputs()) {
+                InputEntity inputEntity = jpaInputRepository.findByInputCode(ip.getInput().getInputCode())
+                    .orElseThrow(() -> new IllegalArgumentException("Input not found: " + ip.getInput().getInputCode()));
+
+                InputProductEntity ipEntity = new InputProductEntity();
+                ipEntity.setProduct(entity);
+                ipEntity.setInput(inputEntity);
+                ipEntity.setQuantityForProduction(ip.getQuantityForProduction());
+
+                entity.getInputProducts().add(ipEntity);
+            }
+        }
+
+        ProductEntity saved = jpaProductRepository.save(entity);
+        return toDomain(saved);
     }
 
     @Override
