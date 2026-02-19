@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Input {
+    private int id;
     private int inputCode;
     private String name;
     private int quantityInStock;
@@ -14,6 +15,18 @@ public class Input {
         this.name = name;
         this.quantityInStock = quantity_in_stock;
         this.products = new ArrayList<>();
+    }
+    
+    public Input(int id, int inputCode, String name, int quantity_in_stock) {
+        this.id = id;
+        this.inputCode = inputCode;
+        this.name = name;
+        this.quantityInStock = quantity_in_stock;
+        this.products = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getInputCode() {

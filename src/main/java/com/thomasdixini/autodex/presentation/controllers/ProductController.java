@@ -1,25 +1,31 @@
 package com.thomasdixini.autodex.presentation.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thomasdixini.autodex.application.dtos.product.calculateProduction.CalculateProductionOutputDto;
 import com.thomasdixini.autodex.application.dtos.product.create.CreateProductInputDto;
 import com.thomasdixini.autodex.application.dtos.product.create.CreateProductOutputDto;
+import com.thomasdixini.autodex.application.usecases.CalculateProductionCapacityUseCase;
 import com.thomasdixini.autodex.application.usecases.CreateProductUseCase;
 import com.thomasdixini.autodex.presentation.dtos.productDtos.CreateProductRequest;
+
 
 
 @RestController
 @RequestMapping ("/products")
 public class ProductController {
     private final CreateProductUseCase createProductUseCase;
+    private final CalculateProductionCapacityUseCase calculateProductionCapacityUseCase;
 
-    public ProductController(CreateProductUseCase createProductUseCase) {
+    public ProductController(CreateProductUseCase createProductUseCase, CalculateProductionCapacityUseCase calculateProductionCapacityUseCase) {
         super();
         this.createProductUseCase = createProductUseCase;
+        this.calculateProductionCapacityUseCase = calculateProductionCapacityUseCase;
     }
 
 
@@ -36,5 +42,11 @@ public class ProductController {
 
         return ResponseEntity.ok(output);
     }
+
+    @GetMapping("/production-capacity")
+    public ResponseEntity<CalculateProductionOutputDto> getProductsCapacity() {
+        return ResponseEntity.ok(calculateProductionCapacityUseCase.execute());
+    }
+    
     
 }

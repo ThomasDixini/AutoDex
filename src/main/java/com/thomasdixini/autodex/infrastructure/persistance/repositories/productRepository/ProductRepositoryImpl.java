@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.thomasdixini.autodex.domain.model.Input;
 import com.thomasdixini.autodex.domain.model.InputProduct;
 import com.thomasdixini.autodex.domain.model.Product;
 import com.thomasdixini.autodex.domain.repositories.ProductRepository;
@@ -68,7 +69,32 @@ public class ProductRepositoryImpl implements ProductRepository {
         return entity;
     }
 
+    private InputEntity toEntity(Input input) {
+        InputEntity entity = new InputEntity();
+        entity.setId(input.getId());
+        entity.setInputCode(input.getInputCode());
+        entity.setName(input.getName());
+        entity.setQuantityInStock(input.getQuantityInstock());
+        return entity;
+    }
+
     private Product toDomain(ProductEntity entity) {
-        return new Product(entity.getProductCode(), entity.getName(), entity.getPrice());
+        var product = new Product(entity.getProductCode(), entity.getName(), entity.getPrice());
+        entity.getInputProducts().forEach(c -> product.addInputProduct(toDomain(c.getInput()), c.getQuantityForProduction()));
+        return product;
+    }
+
+    private Input toDomain(InputEntity entity) {
+        var input = new Input(entity.getId(), entity.getInputCode(), entity.getName(), entity.getQuantityInStock());
+        return input;
+    }
+
+    @Override
+    public List<Product> findAllByInputs(List<Input> inputs) {
+        List<InputEntity> inputEntities = inputs.stream()
+            .map(this::toEntity)
+            .toList();
+
+        return this.jpaProductRepository.findByInputs(inputEntities).stream().map(this::toDomain).toList();
     }
 }

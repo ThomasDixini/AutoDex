@@ -35,12 +35,21 @@ public class InputRepositoryImpl implements InputRepository {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public List<Input> findAllWithStockAvailable() {
+        return this.jpaInputRepository.findAll().stream()
+            .filter(input -> input.getQuantityInStock() > 0)
+            .map(this::toDomain)
+            .toList();
+    }
+
     private Input toDomain(InputEntity entity) {
-        return new Input(entity.getInputCode(), entity.getName(), entity.getQuantityInStock());
+        return new Input(entity.getId(), entity.getInputCode(), entity.getName(), entity.getQuantityInStock());
     }
 
     private InputEntity toEntity(Input input) {
         InputEntity entity = new InputEntity();
+        entity.setId(input.getId());
         entity.setInputCode(input.getInputCode());
         entity.setName(input.getName());
         entity.setQuantityInStock(input.getQuantityInstock());

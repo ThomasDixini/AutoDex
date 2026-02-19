@@ -39,6 +39,10 @@ public class InputEntity {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public int getInputCode() {
         return inputCode;
     }
