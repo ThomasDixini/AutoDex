@@ -48,11 +48,20 @@ public class InputRepositoryImpl implements InputRepository {
     }
 
     private InputEntity toEntity(Input input) {
-        InputEntity entity = new InputEntity();
-        entity.setId(input.getId());
+        InputEntity entity = new InputEntity(
+            
+        );
+        // entity.setId(input.getId());
         entity.setInputCode(input.getInputCode());
         entity.setName(input.getName());
         entity.setQuantityInStock(input.getQuantityInstock());
         return entity;
+    }
+
+    @Override
+    public List<Input> findAll() {
+        return this.jpaInputRepository.findAll().stream()
+            .map(this::toDomain)
+            .toList();
     }
 }
