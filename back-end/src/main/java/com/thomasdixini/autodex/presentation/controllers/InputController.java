@@ -23,7 +23,7 @@ public class InputController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateInputOutputDto> postMethodName(@RequestBody CreateInputRequest request) {
+    public ResponseEntity<CreateInputOutputDto> createInput(@RequestBody CreateInputRequest request) {
         CreateInputDto inputDto = new CreateInputDto(
             request.inputCode(),
             request.name(),
