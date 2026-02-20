@@ -61,18 +61,26 @@ export default function Product() {
                             </thead>
                             <tbody className="bg-blue-1000 border border-gray-400 border-collapse">
                                 {
-                                    inputs.map((input, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="p-4">{input.code}</td>
-                                                <td className="p-4">{input.name}</td>
-                                                <td className="p-4">{input.stock}</td>
-                                                <td className="p-4 flex gap-6 justify-end">
-                                                    <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
+                                    inputs.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={4} className="p-8 text-center text-gray-400">
+                                                Nenhum insumo para este produto
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        inputs.map((input, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="p-4">{input.code}</td>
+                                                    <td className="p-4">{input.name}</td>
+                                                    <td className="p-4">{input.stock}</td>
+                                                    <td className="p-4 flex gap-6 justify-end">
+                                                        <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    )
                                 }
                             </tbody>
                             <tfoot className="bg-blue-800 rounded-md">

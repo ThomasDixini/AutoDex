@@ -39,19 +39,27 @@ export default function Inputs() {
                             </thead>
                             <tbody className="bg-gray-900 border border-gray-400 border-collapse">
                                 {
-                                    inputs.map((input, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="p-4">{input.code}</td>
-                                                <td className="p-4">{input.name}</td>
-                                                <td className="p-4">{input.stock}</td>
-                                                <td className="p-4 flex gap-6 justify-end">
-                                                    <Pencil onClick={() => setOpen(true)} fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer" />
-                                                    <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer" />
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
+                                    inputs.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={4} className="p-8 text-center text-gray-400">
+                                                Nenhum input encontrado
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        inputs.map((input, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="p-4">{input.code}</td>
+                                                    <td className="p-4">{input.name}</td>
+                                                    <td className="p-4">{input.stock}</td>
+                                                    <td className="p-4 flex gap-6 justify-end">
+                                                        <Pencil onClick={() => setOpen(true)} fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer" />
+                                                        <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer" />
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    )
                                 }
                             </tbody>
                             <tfoot className="bg-gray-800 border border-gray-400 border-collapse">

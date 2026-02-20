@@ -31,22 +31,30 @@ export default function Products() {
                         </thead>
                         <tbody className="bg-gray-900 border border-gray-400 border-collapse">
                             {
-                                products.map((product, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td className="p-4">{product.code}</td>
-                                            <td className="p-4">{product.name}</td>
-                                            <td className="p-4">{product.price}</td>
-                                            <td className="p-4 flex gap-6 justify-end">
-                                                    
-                                                <Link href={`/products/${product.id}`}>
-                                                    <Pencil href="/" fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
-                                                </Link>
-                                                <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
+                                products.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={4} className="p-8 text-center text-gray-400">
+                                            Nenhum produto encontrado
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    products.map((product, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td className="p-4">{product.code}</td>
+                                                <td className="p-4">{product.name}</td>
+                                                <td className="p-4">{product.price}</td>
+                                                <td className="p-4 flex gap-6 justify-end">
+                                                        
+                                                    <Link href={`/products/${product.id}`}>
+                                                        <Pencil href="/" fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
+                                                    </Link>
+                                                    <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                )
                             }
                         </tbody>
                         <tfoot className="bg-gray-800 border border-gray-400 border-collapse">
