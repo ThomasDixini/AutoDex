@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.thomasdixini.autodex.application.dtos.product.calculateProduction.CalculateProductionOutputDto;
 import com.thomasdixini.autodex.application.dtos.product.create.CreateProductInputDto;
 import com.thomasdixini.autodex.application.dtos.product.create.CreateProductOutputDto;
+import com.thomasdixini.autodex.application.dtos.product.findAll.FindAllProductsOutputDto;
 import com.thomasdixini.autodex.application.usecases.CalculateProductionCapacityUseCase;
 import com.thomasdixini.autodex.application.usecases.CreateProductUseCase;
+import com.thomasdixini.autodex.application.usecases.FindAllProductsUseCase;
 import com.thomasdixini.autodex.presentation.dtos.productDtos.CreateProductRequest;
 
 
@@ -21,11 +23,13 @@ import com.thomasdixini.autodex.presentation.dtos.productDtos.CreateProductReque
 public class ProductController {
     private final CreateProductUseCase createProductUseCase;
     private final CalculateProductionCapacityUseCase calculateProductionCapacityUseCase;
+    private final FindAllProductsUseCase findAllProductsUseCase;
 
-    public ProductController(CreateProductUseCase createProductUseCase, CalculateProductionCapacityUseCase calculateProductionCapacityUseCase) {
+    public ProductController(CreateProductUseCase createProductUseCase, CalculateProductionCapacityUseCase calculateProductionCapacityUseCase, FindAllProductsUseCase findAllProductsUseCase) {
         super();
         this.createProductUseCase = createProductUseCase;
         this.calculateProductionCapacityUseCase = calculateProductionCapacityUseCase;
+        this.findAllProductsUseCase = findAllProductsUseCase;
     }
 
 
@@ -41,6 +45,11 @@ public class ProductController {
         CreateProductOutputDto output = createProductUseCase.execute(inputDto);
 
         return ResponseEntity.ok(output);
+    }
+
+    @GetMapping
+    public ResponseEntity<FindAllProductsOutputDto> getProducts() {
+        return ResponseEntity.ok(findAllProductsUseCase.execute());
     }
 
     @GetMapping("/production-capacity")

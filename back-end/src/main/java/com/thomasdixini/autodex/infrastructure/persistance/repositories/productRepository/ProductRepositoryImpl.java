@@ -79,7 +79,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private Product toDomain(ProductEntity entity) {
-        var product = new Product(entity.getProductCode(), entity.getName(), entity.getPrice());
+        var product = new Product(entity.getId(), entity.getProductCode(), entity.getName(), entity.getPrice());
         entity.getInputProducts().forEach(c -> product.addInputProduct(toDomain(c.getInput()), c.getQuantityForProduction()));
         return product;
     }
@@ -96,5 +96,10 @@ public class ProductRepositoryImpl implements ProductRepository {
             .toList();
 
         return this.jpaProductRepository.findByInputs(inputEntities).stream().map(this::toDomain).toList();
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return this.jpaProductRepository.findAll().stream().map(this::toDomain).toList();
     }
 }

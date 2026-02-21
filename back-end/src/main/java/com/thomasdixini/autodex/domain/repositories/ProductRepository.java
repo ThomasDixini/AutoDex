@@ -8,6 +8,7 @@ import com.thomasdixini.autodex.domain.model.Product;
 public interface ProductRepository {
     Product create(Product product);
     Product findById(int id);
+    List<Product> findAll();
     List<Product> findAllByInputs(List<Input> inputs);
     List<Product> findAllByPriority();
 }

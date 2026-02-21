@@ -1,24 +1,40 @@
-import { Pencil, Plus, Trash } from "lucide-react";
+"use client"
+
+import { findAllProducts } from "@/src/services/products.service";
+import { Product } from "@/src/types/product.type";
+import { Pencil, Plus, Search, Trash } from "lucide-react";
 import Link from "next/link";
+import { useLoading } from "../context/LoadingContext";
+import { useState } from "react";
 
 export default function Products() {
-    const products = [
-        {
-            id: 1,
-            code: "001",
-            name: "Product 1",
-            price: "10,00"
+    const { setLoading } = useLoading();
+    const [products, setProducts] = useState<Product[]>([]);
+
+    async function loadProducts(){
+        try{
+            setLoading(true);
+            const response = await findAllProducts();
+            setProducts(response.products);
+        } finally {
+            setLoading(false);
         }
-    ]
+    }
 
     return (
         <div className="flex min-h-screen items-start justify-center font-sans bg-gray-1000">
             <main className="w-full p-8 flex flex-col justify-start">
                 <h1 className="font-bold text-4xl">Products</h1>
-                <Link href={`/products/new`} className="ml-auto px-4 py-2 bg-gray-400 rounded-md hover:bg-gray-800 transition-all duration-200 text-white flex items-center cursor-pointer">
-                    <Plus fill="currentColor" size={16} className="inline-block mr-2"/>
-                    <span>New Product</span>
-                </Link>
+                <div className="flex gap-4 ml-auto">
+                    <Link href={`/products/new`} className="ml-auto px-4 py-2 bg-gray-400 rounded-md hover:bg-gray-800 transition-all duration-200 text-white flex items-center cursor-pointer">
+                        <Plus fill="currentColor" size={16} className="inline-block mr-2"/>
+                        <span>New Product</span>
+                    </Link>
+                    <button onClick={loadProducts} className="ml-auto px-4 py-2 bg-gray-400 rounded-md hover:bg-gray-800 transition-all duration-200 text-white flex items-center cursor-pointer">
+                        <Search fill="currentColor" size={16} className="inline-block mr-2" />
+                        <span>Refresh Products</span>
+                    </button>
+                </div>
                 <div className="overflow-hidden rounded-md mt-8">
                     <table className="w-full">
                         <thead className="bg-gray-800 border border-gray-400 border-collapse">
@@ -41,7 +57,7 @@ export default function Products() {
                                     products.map((product, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td className="p-4">{product.code}</td>
+                                                <td className="p-4">{product.productCode}</td>
                                                 <td className="p-4">{product.name}</td>
                                                 <td className="p-4">{product.price}</td>
                                                 <td className="p-4 flex gap-6 justify-end">

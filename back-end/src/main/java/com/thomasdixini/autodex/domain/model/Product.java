@@ -4,16 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
+    private int id;
     private int productCode;
     private String name;
     private double price;
     private List<InputProduct> inputs;
 
+    public Product(int id, int productCode, String name, double price) {
+        this.id = id;
+        this.productCode = productCode;
+        this.name = name;
+        this.price = price;
+        this.inputs = new ArrayList<>();
+    }
+    
     public Product(int productCode, String name, double price) {
         this.productCode = productCode;
         this.name = name;
         this.price = price;
         this.inputs = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getProductCode() {
