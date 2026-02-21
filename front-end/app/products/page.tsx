@@ -41,7 +41,7 @@ export default function Products() {
                             <tr>
                                 <th className="p-4 text-left text-gray-100">Code</th>
                                 <th className="p-4 text-left text-gray-100">Name</th>
-                                <th className="p-4 text-left text-gray-100">Stock</th>
+                                <th className="p-4 text-left text-gray-100">Price</th>
                                 <th className="p-4 text-right text-gray-100">Actions</th>
                             </tr>
                         </thead>

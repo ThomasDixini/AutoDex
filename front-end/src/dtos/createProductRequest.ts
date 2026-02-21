@@ -1,5 +1,5 @@
 export interface CreateProductRequest {
-    code: string;
+    productCode: string;
     name: string;
     price: number;
     inputs: InputForProductDto[];

@@ -5,6 +5,7 @@ import { Product } from "../types/product.type";
 
 
 export async function createProduct(req: CreateProductRequest){
+    console.log(req)
     const response = await api.post("/products", req)
     return response.data;
 }
