@@ -1,18 +1,39 @@
 "use client"
 
+import { bindInput } from "@/src/services/inputs.service"
+import { Input } from "@/src/types/input.type"
 import { ArrowLeft, Disc, Info, Plus, Save, Trash } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function Product() {
     const router = useRouter()
+    const [inputs, setInputs] = useState<Input[]>([]);
+    const [formBindInput, setFormBindInput] = useState({
+        codeOrName: ""
+    })
 
-    const inputs = [
-        {
-            code: "001",
-            name: "Input 1",
-            stock: "10,00"
+    async function handleBindInput(e: any) {
+        try {
+            console.log(e)
+            const input = await bindInput(formBindInput.codeOrName);
+            setInputs(prev => [...prev, input]);
+        } finally {
+
         }
-    ]
+    }
+
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setFormBindInput({
+            ...formBindInput,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function handleRemoveInput(index: number) {
+        setInputs(prev => prev.filter((_, i) => i !== index));
+    }
+
     return(
         <div className="h-screen bg-gray-1000 p-8 flex flex-col justify-start gap-6">
             <div className="flex content-between items-center">
@@ -71,11 +92,11 @@ export default function Product() {
                                         inputs.map((input, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td className="p-4">{input.code}</td>
+                                                    <td className="p-4">{input.inputCode}</td>
                                                     <td className="p-4">{input.name}</td>
-                                                    <td className="p-4">{input.stock}</td>
+                                                    <td className="p-4">{input.quantityInStock}</td>
                                                     <td className="p-4 flex gap-6 justify-end">
-                                                        <Trash fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
+                                                        <Trash onClick={() => handleRemoveInput(index)} fill="currentColor" size={16} className="hover:opacity-5 transition-all duration-200 cursor-pointer"/>
                                                     </td>
                                                 </tr>
                                             )
@@ -85,7 +106,7 @@ export default function Product() {
                             </tbody>
                             <tfoot className="bg-blue-800 rounded-md">
                                 <tr>
-                                    <td className="p-6 text-gray-100 text-xs" colSpan={4}>Total de {inputs.length} produtos </td>
+                                    <td className="p-6 text-gray-100 text-xs" colSpan={4}>Total de {inputs.length} insumo(s) </td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -96,8 +117,8 @@ export default function Product() {
                             <h2 className="text-gray-100">Vincular Insumos</h2>
                         </span>
                         <div className="w-full grid grid-cols-[4fr_1fr]">
-                            <input type="text" className="bg-blue-800 rounded-md border border-gray-400 p-2 text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite o nome ou código do insumo..."/>
-                            <button className="bg-blue-800 hover:bg-blue-600 cursor-pointer transition-all duration-200 text-white px-4 py-2 rounded-md ml-2">Vincular</button>
+                            <input name="codeOrName" value={formBindInput.codeOrName} onChange={handleChange} type="text" className="bg-blue-800 rounded-md border border-gray-400 p-2 text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite o nome ou código do insumo..."/>
+                            <button onClick={handleBindInput} className="bg-blue-800 hover:bg-blue-600 cursor-pointer transition-all duration-200 text-white px-4 py-2 rounded-md ml-2">Vincular</button>
                         </div>
                     </div>
                 </div>

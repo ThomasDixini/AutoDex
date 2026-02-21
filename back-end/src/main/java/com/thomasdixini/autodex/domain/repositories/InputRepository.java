@@ -7,6 +7,7 @@ import com.thomasdixini.autodex.domain.model.Input;
 public interface  InputRepository {
     Input create(Input input);
     Input findById(int id);
+    Input findByCodeOrName(String codeOrName);
     List<Input> findAll();
     List<Input> findAllWithStockAvailable();
     List<Input> findAllByProductId(Long productId);

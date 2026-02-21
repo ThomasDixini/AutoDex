@@ -64,4 +64,9 @@ public class InputRepositoryImpl implements InputRepository {
             .map(this::toDomain)
             .toList();
     }
+
+    @Override
+    public Input findByCodeOrName(String codeOrName) {
+        return this.jpaInputRepository.findByCodeOrName(codeOrName).map(this::toDomain).orElse(null);
+    }
 }

@@ -3,6 +3,7 @@ package com.thomasdixini.autodex.infrastructure.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.thomasdixini.autodex.application.usecases.BindInputUseCase;
 import com.thomasdixini.autodex.application.usecases.CalculateProductionCapacityUseCase;
 import com.thomasdixini.autodex.application.usecases.CreateInputUseCase;
 import com.thomasdixini.autodex.application.usecases.CreateProductUseCase;
@@ -39,5 +40,10 @@ public class ApplicationConfig {
     @Bean
     public FindAllProductsUseCase findAllProductsUseCase(ProductRepository productRepository) {
         return new FindAllProductsUseCase(productRepository);
+    }
+
+    @Bean 
+    public BindInputUseCase bindInputUseCase(InputRepository inputRepository) {
+        return new BindInputUseCase(inputRepository);
     }
 }
